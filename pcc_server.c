@@ -5,12 +5,13 @@
 
 #include <unistd.h>
 #include <sys/mman.h>
+#include <signal.h>
 
 #define LOWER_LIMIT 32
 #define UPPER_LIMIT 126
 
 static unsigned int pcc_total[128];
-static int shouldIContinue = 1;
+static int volatile shouldIContinue = 1;
 
 void err_handler(int status) {
     if (status < 0) {
@@ -34,10 +35,10 @@ void check_args_server(int argc) {
     exit(1);
 }
 
-int create_socket(struct in_addr *ip, struct sockaddr_in *sin2, unsigned int port) {
+int create_socket(struct in_addr *ip, struct sockaddr *sin2, unsigned int port) {
     int s = socket(AF_INET, SOCK_STREAM, 0);
 
-    connect(s, &sin2, sizeof(sin2));
+    connect(s, sin2, sizeof(sin2));
     return s;
 }
 
@@ -78,9 +79,15 @@ void readData( void *data_buf, int confd, int notRead) {
         notRead -= nsent;
     }
 }
-
+void cntrlc()
+{
+    shouldIContinue=0;
+}
 int main(int argc, char **argv) {
+
     check_args_server(argc);
+    signal(SIGINT, cntrlc);
+///
     unsigned int port = htonl(atoi(argv[1]));
     struct sockaddr_in sin2;
     int s = create_socket(htonl(INADDR_ANY), &sin2, port);
