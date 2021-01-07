@@ -7,7 +7,7 @@
 #include <sys/mman.h>
 
 static unsigned int pcc_total[128];
-static shouldIcontinue = 1;
+static shouldIContinue = 1;
 
 void err_handler(int status) {
     if (status < 0) {
