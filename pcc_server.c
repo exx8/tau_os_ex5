@@ -100,7 +100,8 @@ int main(int argc, char **argv) {
     while (shouldIContinue) {
         unsigned int numOfPrintable = 0;
         struct sockaddr_in peerAddress;
-        err_handler(accept(s, (struct sockaddr *) &peerAddress, (socklen_t *) sizeof(peerAddress)));
+        socklen_t *len = (socklen_t *) sizeof(peerAddress);
+        err_handler(accept(s, (struct sockaddr *) &peerAddress, &len));
         unsigned int length;
         readData(&length, s, sizeof(length));
         while (length > 0) {
