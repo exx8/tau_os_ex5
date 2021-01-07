@@ -107,9 +107,8 @@ int main(int argc, char **argv) {
         }
         sendData(&numOfPrintable, s, sizeof numOfPrintable);
     }
-    for(int k=LOWER_LIMIT;k<=UPPER_LIMIT;k++)
-    {
-        printf("char '%c' : %u times\n",,);
+    for (int k = LOWER_LIMIT; k <= UPPER_LIMIT; k++) {
+        printf("char '%c' : %u times\n", k, pcc_total[k]);
     }
     close(s);
     return 0;
