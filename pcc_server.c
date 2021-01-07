@@ -38,6 +38,8 @@ void check_args_server(int argc) {
 
 int create_socket(struct sockaddr_in *sin2, unsigned int port) {
     int s = socket(AF_INET, SOCK_STREAM, 0);
+    int value = 1;
+    setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &value, sizeof(value));
     connect(s, (const struct sockaddr *) sin2, sizeof(sin2));
     return s;
 }

@@ -34,8 +34,8 @@ int create_socket(struct in_addr *ip, unsigned int port) {
     struct sockaddr_in sin;
     memset(&sin, 0, sizeof(sin));
     sin.sin_family = AF_INET;
-    sin.sin_port = htons(port); // Note: htons for endiannes
-    sin.sin_addr.s_addr = htonl(ip->s_addr);
+    sin.sin_port = (port); // Note: htons for endiannes
+    sin.sin_addr.s_addr = htons(ip->s_addr);
     err_handler(connect(s, &sin, sizeof(sin)));
     return s;
 }
@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
     check_args(argc);
     struct in_addr ip;
     inet_aton(argv[1], &ip);
-    unsigned int port = htonl(atoi(argv[2]));
+    unsigned int port = htons(atoi(argv[2]));
     char *path = argv[3];
     unsigned int length;
     int fileDescriptor;
@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
 
 
     int confd = create_socket(&ip, port);
-    int lenBuf = htonl(length);
+    int lenBuf = htons(length);
     sendData(&lenBuf, confd, sizeof(lenBuf));
     sendData(data_buf, confd, length);
     unsigned int readableNum;
