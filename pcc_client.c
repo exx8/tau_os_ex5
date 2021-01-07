@@ -29,6 +29,7 @@ int create_socket(struct in_addr *ip, unsigned int port) {
             .sin_addr = (*ip)
     };
     connect(s, &sin, sizeof(sin));
+    return s;
 }
 
 
@@ -39,11 +40,30 @@ int main(int argc, char **argv) {
     unsigned int port = argv[2];
     char *path = argv[3];
     int length;
-    readEntireFile(path, length);
+    void *data_buf = readEntireFile(path, length);
 
 
-    create_socket(&ip, port);
+    int confd = create_socket(&ip, port);
+    int totalsent = 0;
+    int notwritten = length;
 
+    // keep looping until nothing left to write
+    while (notwritten > 0) {
+        // notwritten = how much we have left to write
+        // totalsent  = how much we've written so far
+        // nsent = how much we've written in last write() call */
+        int nsent = write(confd,
+                          data_buf + totalsent,
+                          notwritten);
+        // check if error occured (client closed connection?)
+        assert(nsent >= 0);
+
+        totalsent += nsent;
+        notwritten -= nsent;
+    }
+
+    // close socket
+    close(confd);
 
 }
 
