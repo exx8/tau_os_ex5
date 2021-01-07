@@ -23,8 +23,8 @@ void check_args(int argc) {
 
 void *readEntireFile(int *fileDescriptor, char *path, unsigned int *length) {
     *fileDescriptor = open(path, O_RDONLY);
-    *length = lseek(fileDescriptor, 0, SEEK_END);
-    return mmap(0, length, PROT_READ, MAP_PRIVATE, fileDescriptor, 0);
+    *length = lseek(*fileDescriptor, 0, SEEK_END);
+    return mmap(0, *length, PROT_READ, MAP_PRIVATE, *fileDescriptor, 0);
 }
 
 int create_socket(struct in_addr *ip, unsigned int port) {
@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
     inet_aton(argv[1], &ip);
     unsigned int port = htonl(argv[2]);
     char *path = argv[3];
-    int length;
+    unsigned int length;
     int fileDescriptor;
     void *data_buf = readEntireFile(&fileDescriptor, path, length);
 
