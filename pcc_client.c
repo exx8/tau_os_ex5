@@ -16,7 +16,7 @@ void check_args(int argc) {
     exit(1);
 }
 
-void *readEntireFile(int * fileDescriptor,char *path, unsigned int *length) {
+void *readEntireFile(int *fileDescriptor, char *path, unsigned int *length) {
     *fileDescriptor = open(path, O_RDONLY);
     *length = lseek(fileDescriptor, 0, SEEK_END);
     return mmap(0, length, PROT_READ, MAP_PRIVATE, fileDescriptor, 0);
@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
     char *path = argv[3];
     int length;
     int fileDescriptor;
-    void *data_buf = readEntireFile(&fileDescriptor,path, length);
+    void *data_buf = readEntireFile(&fileDescriptor, path, length);
 
 
     int confd = create_socket(&ip, port);
@@ -70,6 +70,7 @@ int main(int argc, char **argv) {
 
     // close socket
     close(confd);
+    close(fileDescriptor);
 
 }
 
