@@ -1,3 +1,4 @@
 /home/eran/CLionProjects/tau_os_ex5/cmake-build-debug/CMakeFiles/edit_cache.dir
 /home/eran/CLionProjects/tau_os_ex5/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/eran/CLionProjects/tau_os_ex5/cmake-build-debug/CMakeFiles/tau_os_ex5.dir
+/home/eran/CLionProjects/tau_os_ex5/cmake-build-debug/CMakeFiles/pcc_client.dir
+/home/eran/CLionProjects/tau_os_ex5/cmake-build-debug/CMakeFiles/pcc_server.dir

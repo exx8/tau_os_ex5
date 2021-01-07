@@ -44,5 +44,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/tau_os_ex5.dir/DependInfo.cmake"
+  "CMakeFiles/pcc_client.dir/DependInfo.cmake"
+  "CMakeFiles/pcc_server.dir/DependInfo.cmake"
   )

@@ -131,17 +131,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named tau_os_ex5
+# Target rules for targets named pcc_client
 
 # Build rule for target.
-tau_os_ex5: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tau_os_ex5
-.PHONY : tau_os_ex5
+pcc_client: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pcc_client
+.PHONY : pcc_client
 
 # fast build rule for target.
-tau_os_ex5/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/build
-.PHONY : tau_os_ex5/fast
+pcc_client/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pcc_client.dir/build.make CMakeFiles/pcc_client.dir/build
+.PHONY : pcc_client/fast
+
+#=============================================================================
+# Target rules for targets named pcc_server
+
+# Build rule for target.
+pcc_server: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pcc_server
+.PHONY : pcc_server
+
+# fast build rule for target.
+pcc_server/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pcc_server.dir/build.make CMakeFiles/pcc_server.dir/build
+.PHONY : pcc_server/fast
 
 pcc_client.o: pcc_client.c.o
 
@@ -149,7 +162,7 @@ pcc_client.o: pcc_client.c.o
 
 # target to build an object file
 pcc_client.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/pcc_client.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pcc_client.dir/build.make CMakeFiles/pcc_client.dir/pcc_client.c.o
 .PHONY : pcc_client.c.o
 
 pcc_client.i: pcc_client.c.i
@@ -158,7 +171,7 @@ pcc_client.i: pcc_client.c.i
 
 # target to preprocess a source file
 pcc_client.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/pcc_client.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pcc_client.dir/build.make CMakeFiles/pcc_client.dir/pcc_client.c.i
 .PHONY : pcc_client.c.i
 
 pcc_client.s: pcc_client.c.s
@@ -167,7 +180,7 @@ pcc_client.s: pcc_client.c.s
 
 # target to generate assembly for a file
 pcc_client.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/pcc_client.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pcc_client.dir/build.make CMakeFiles/pcc_client.dir/pcc_client.c.s
 .PHONY : pcc_client.c.s
 
 pcc_server.o: pcc_server.c.o
@@ -176,7 +189,7 @@ pcc_server.o: pcc_server.c.o
 
 # target to build an object file
 pcc_server.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/pcc_server.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pcc_server.dir/build.make CMakeFiles/pcc_server.dir/pcc_server.c.o
 .PHONY : pcc_server.c.o
 
 pcc_server.i: pcc_server.c.i
@@ -185,7 +198,7 @@ pcc_server.i: pcc_server.c.i
 
 # target to preprocess a source file
 pcc_server.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/pcc_server.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pcc_server.dir/build.make CMakeFiles/pcc_server.dir/pcc_server.c.i
 .PHONY : pcc_server.c.i
 
 pcc_server.s: pcc_server.c.s
@@ -194,7 +207,7 @@ pcc_server.s: pcc_server.c.s
 
 # target to generate assembly for a file
 pcc_server.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/pcc_server.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pcc_server.dir/build.make CMakeFiles/pcc_server.dir/pcc_server.c.s
 .PHONY : pcc_server.c.s
 
 # Help Target
@@ -205,7 +218,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... tau_os_ex5"
+	@echo "... pcc_client"
+	@echo "... pcc_server"
 	@echo "... pcc_client.o"
 	@echo "... pcc_client.i"
 	@echo "... pcc_client.s"
