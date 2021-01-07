@@ -15,7 +15,7 @@ void err_handler(int status) {
 }
 
 void check_args(int argc) {
-    if (argc != 4) {
+    if (argc != 5) {
         fprintf(stderr, "invalid num of args\n");
     }
     exit(1);
