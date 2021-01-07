@@ -6,8 +6,13 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/mman.h>
-#include <assert.h>
 
+void err_handler(int status) {
+    if (status < 0) {
+        perror(NULL);
+        exit(1);
+    }
+}
 
 void check_args(int argc) {
     if (argc != 4) {
@@ -45,7 +50,7 @@ void sendData(const void *data_buf, int confd, int notwritten) {
                           data_buf + totalsent,
                           notwritten);
         // check if error occured (client closed connection?)
-        assert(nsent >= 0);
+        err_handler(nsent);
 
         totalsent += nsent;
         notwritten -= nsent;
@@ -63,7 +68,8 @@ void readData(const void *data_buf, int confd, int notRead) {
                          data_buf + totalsent,
                          notRead);
         // check if error occured (client closed connection?)
-        assert(nsent >= 0);
+
+        err_handler(nsent);
 
         totalsent += nsent;
         notRead -= nsent;
