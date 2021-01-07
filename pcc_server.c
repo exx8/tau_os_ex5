@@ -36,13 +36,8 @@ void check_args_server(int argc) {
 
 int create_socket(struct in_addr *ip, struct sockaddr_in *sin2, unsigned int port) {
     int s = socket(AF_INET, SOCK_STREAM, 0);
-    struct sockaddr_in sin = {
-            .sin_family = AF_INET,
-            .sin_port = port,
-            .sin_addr = (*ip)
-    };
-    *sin2 = sin;
-    connect(s, &sin, sizeof(sin));
+
+    connect(s, &sin2, sizeof(sin2));
     return s;
 }
 

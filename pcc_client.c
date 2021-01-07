@@ -29,11 +29,7 @@ void *readEntireFile(int *fileDescriptor, char *path, unsigned int *length) {
 
 int create_socket(struct in_addr *ip, unsigned int port) {
     int s = socket(AF_INET, SOCK_STREAM, 0);
-    struct sockaddr_in sin = {
-            .sin_family = AF_INET,
-            .sin_port = port,
-            .sin_addr = (*ip)
-    };
+    struct sockaddr sin;
     connect(s, &sin, sizeof(sin));
     return s;
 }
@@ -57,7 +53,7 @@ void sendData(const void *data_buf, int confd, int notwritten) {
     }
 }
 
-void readData(const void *data_buf, int confd, int notRead) {
+void readData( void *data_buf, int confd, int notRead) {
     int totalsent = 0;
     // keep looping until nothing left to write
     while (notRead > 0) {
@@ -80,11 +76,11 @@ int main(int argc, char **argv) {
     check_args(argc);
     struct in_addr ip;
     inet_aton(argv[1], &ip);
-    unsigned int port = htonl(argv[2]);
+    unsigned int port = htonl(atoi(argv[2]));
     char *path = argv[3];
     unsigned int length;
     int fileDescriptor;
-    void *data_buf = readEntireFile(&fileDescriptor, path, length);
+    void *data_buf = readEntireFile(&fileDescriptor, path, &length);
 
 
     int confd = create_socket(&ip, port);
