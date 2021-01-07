@@ -30,13 +30,14 @@ void check_args_server(int argc) {
     exit(1);
 }
 
-int create_socket(struct in_addr *ip, unsigned int port) {
+int create_socket(struct in_addr *ip, struct sockaddr_in *sin2, unsigned int port) {
     int s = socket(AF_INET, SOCK_STREAM, 0);
     struct sockaddr_in sin = {
             .sin_family = AF_INET,
             .sin_port = port,
             .sin_addr = (*ip)
     };
+    *sin2 = sin;
     connect(s, &sin, sizeof(sin));
     return s;
 }
@@ -82,6 +83,14 @@ void readData(const void *data_buf, int confd, int notRead) {
 int main(int argc, char **argv) {
     check_args_server(argc);
     unsigned int port = htonl(argv[1]);
-
-
+    struct sockaddr_in sin2;
+    int s = create_socket(htonl(INADDR_ANY), &sin2, port);
+    err_handler(bind(s, (struct sockaddr *) &sin2, sizeof(sin2)));
+    err_handler(listen(s, 10));
+    while (1) {
+        struct sockaddr peerAddress;
+        err_handler(accept(s, &peerAddress, sizeof(peerAddress)));
+        readData()
+    }
+    return 0;
 }
