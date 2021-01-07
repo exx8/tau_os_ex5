@@ -92,6 +92,6 @@ int main(int argc, char **argv) {
     // close socket
     close(confd);
     close(fileDescriptor);
-
+    return 0;
 }
 
