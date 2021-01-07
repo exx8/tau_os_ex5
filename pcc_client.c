@@ -34,9 +34,9 @@ int create_socket(struct in_addr *ip, unsigned int port) {
     struct sockaddr_in sin;
     memset(&sin, 0, sizeof(sin));
     sin.sin_family = AF_INET;
-    sin.sin_port = htons(10000); // Note: htons for endiannes
-    sin.sin_addr.s_addr = ip;
-    connect(s, &sin, sizeof(sin));
+    sin.sin_port = htons(port); // Note: htons for endiannes
+    sin.sin_addr.s_addr = htonl(ip->s_addr);
+    err_handler(connect(s, &sin, sizeof(sin)));
     return s;
 }
 

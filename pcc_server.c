@@ -88,12 +88,12 @@ int main(int argc, char **argv) {
     check_args_server(argc);
     signal(SIGINT, cntrlc);
 
-    unsigned int port = htonl(atoi(argv[1]));
+    unsigned int port = htons(atoi(argv[1]));
     struct sockaddr_in sin2;
     sin2.sin_family = AF_INET;
     // INADDR_ANY = any local machine address
-    sin2.sin_addr.s_addr = htonl(INADDR_ANY);
-    sin2.sin_port = htons(port);
+    sin2.sin_addr.s_addr = htons(INADDR_ANY);
+    sin2.sin_port = (port);
     int s = create_socket(&sin2, port);
 
     while (shouldIContinue) {
