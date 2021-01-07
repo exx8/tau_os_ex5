@@ -10,7 +10,7 @@
 #define UPPER_LIMIT 126
 
 static unsigned int pcc_total[128];
-static shouldIContinue = 1;
+static int shouldIContinue = 1;
 
 void err_handler(int status) {
     if (status < 0) {
