@@ -6,6 +6,9 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
+#define LOWER_LIMIT 32
+#define UPPER_LIMIT 126
+
 static unsigned int pcc_total[128];
 static shouldIContinue = 1;
 
@@ -17,9 +20,9 @@ void err_handler(int status) {
 }
 
 int isPrintable(int b) {
-    if (b < 32)
+    if (b < LOWER_LIMIT)
         return 0;
-    if (b > 126)
+    if (b > UPPER_LIMIT)
         return 0;
     return 1;
 }
@@ -104,7 +107,10 @@ int main(int argc, char **argv) {
         }
         sendData(&numOfPrintable, s, sizeof numOfPrintable);
     }
-
+    for(int k=LOWER_LIMIT;k<=UPPER_LIMIT;k++)
+    {
+        printf("char '%c' : %u times\n",,);
+    }
     close(s);
     return 0;
 }
