@@ -7,6 +7,7 @@
 #include <sys/mman.h>
 
 static unsigned int pcc_total[128];
+static shouldIcontinue = 1;
 
 void err_handler(int status) {
     if (status < 0) {
@@ -87,10 +88,23 @@ int main(int argc, char **argv) {
     int s = create_socket(htonl(INADDR_ANY), &sin2, port);
     err_handler(bind(s, (struct sockaddr *) &sin2, sizeof(sin2)));
     err_handler(listen(s, 10));
-    while (1) {
+    while (shouldIContinue) {
+        unsigned int numOfPrintable = 0;
         struct sockaddr peerAddress;
         err_handler(accept(s, &peerAddress, sizeof(peerAddress)));
-        readData()
+        unsigned int length;
+        readData(&length, s, sizeof(length));
+        while (length > 0) {
+            char c;
+            err_handler(read(s, &c, sizeof(c)));
+            if (isPrintable(c)) {
+                numOfPrintable++;
+                pcc_total[c]++;
+            }
+        }
+        sendData(&numOfPrintable, s, sizeof numOfPrintable);
     }
+
+    close(s);
     return 0;
 }
