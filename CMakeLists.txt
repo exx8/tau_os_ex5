@@ -3,4 +3,4 @@ project(tau_os_ex5 C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(tau_os_ex5 main.c)
+add_executable(tau_os_ex5 pcc_server.c pcc_client.c)

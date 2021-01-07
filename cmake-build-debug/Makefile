@@ -143,32 +143,59 @@ tau_os_ex5/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/build
 .PHONY : tau_os_ex5/fast
 
-main.o: main.c.o
+pcc_client.o: pcc_client.c.o
 
-.PHONY : main.o
+.PHONY : pcc_client.o
 
 # target to build an object file
-main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/main.c.o
-.PHONY : main.c.o
+pcc_client.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/pcc_client.c.o
+.PHONY : pcc_client.c.o
 
-main.i: main.c.i
+pcc_client.i: pcc_client.c.i
 
-.PHONY : main.i
+.PHONY : pcc_client.i
 
 # target to preprocess a source file
-main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/main.c.i
-.PHONY : main.c.i
+pcc_client.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/pcc_client.c.i
+.PHONY : pcc_client.c.i
 
-main.s: main.c.s
+pcc_client.s: pcc_client.c.s
 
-.PHONY : main.s
+.PHONY : pcc_client.s
 
 # target to generate assembly for a file
-main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/main.c.s
-.PHONY : main.c.s
+pcc_client.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/pcc_client.c.s
+.PHONY : pcc_client.c.s
+
+pcc_server.o: pcc_server.c.o
+
+.PHONY : pcc_server.o
+
+# target to build an object file
+pcc_server.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/pcc_server.c.o
+.PHONY : pcc_server.c.o
+
+pcc_server.i: pcc_server.c.i
+
+.PHONY : pcc_server.i
+
+# target to preprocess a source file
+pcc_server.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/pcc_server.c.i
+.PHONY : pcc_server.c.i
+
+pcc_server.s: pcc_server.c.s
+
+.PHONY : pcc_server.s
+
+# target to generate assembly for a file
+pcc_server.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tau_os_ex5.dir/build.make CMakeFiles/tau_os_ex5.dir/pcc_server.c.s
+.PHONY : pcc_server.c.s
 
 # Help Target
 help:
@@ -179,9 +206,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... tau_os_ex5"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... pcc_client.o"
+	@echo "... pcc_client.i"
+	@echo "... pcc_client.s"
+	@echo "... pcc_server.o"
+	@echo "... pcc_server.i"
+	@echo "... pcc_server.s"
 .PHONY : help
 
 

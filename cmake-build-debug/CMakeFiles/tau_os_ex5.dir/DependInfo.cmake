@@ -4,7 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/eran/CLionProjects/tau_os_ex5/main.c" "/home/eran/CLionProjects/tau_os_ex5/cmake-build-debug/CMakeFiles/tau_os_ex5.dir/main.c.o"
+  "/home/eran/CLionProjects/tau_os_ex5/pcc_client.c" "/home/eran/CLionProjects/tau_os_ex5/cmake-build-debug/CMakeFiles/tau_os_ex5.dir/pcc_client.c.o"
+  "/home/eran/CLionProjects/tau_os_ex5/pcc_server.c" "/home/eran/CLionProjects/tau_os_ex5/cmake-build-debug/CMakeFiles/tau_os_ex5.dir/pcc_server.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

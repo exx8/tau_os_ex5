@@ -76,7 +76,10 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/eran/CLionProjects/tau_os_ex5/main.c">
+		<Unit filename="/home/eran/CLionProjects/tau_os_ex5/pcc_client.c">
+			<Option target="tau_os_ex5"/>
+		</Unit>
+		<Unit filename="/home/eran/CLionProjects/tau_os_ex5/pcc_server.c">
 			<Option target="tau_os_ex5"/>
 		</Unit>
 		<Unit filename="/home/eran/CLionProjects/tau_os_ex5/CMakeLists.txt">
