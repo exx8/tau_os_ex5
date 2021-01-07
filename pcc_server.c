@@ -4,6 +4,16 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+static unsigned int pcc_total[128];
+
+int isPrintable(int b) {
+    if (b < 32)
+        return 0;
+    if (b > 126)
+        return 0;
+    return 1;
+}
+
 void check_args_server(int argc) {
     if (argc != 1) {
         fprintf(stderr, "invalid num of args\n");
