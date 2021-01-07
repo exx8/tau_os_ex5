@@ -1,4 +1,3 @@
-//
-// Created by eran on 07/01/2021.
-//
+int main(int argc, char **argv) {
 
+}
