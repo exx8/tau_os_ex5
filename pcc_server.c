@@ -31,14 +31,14 @@ int isPrintable(int b) {
 void check_args_server(int argc) {
     if (argc != 2) {
         fprintf(stderr, "invalid num of args\n");
+        exit(1);
+
     }
-    exit(1);
 }
 
-int create_socket(struct sockaddr *sin2, unsigned int port) {
+int create_socket(struct sockaddr_in *sin2, unsigned int port) {
     int s = socket(AF_INET, SOCK_STREAM, 0);
-
-    connect(s, sin2, sizeof(sin2));
+    connect(s, (const struct sockaddr *) sin2, sizeof(sin2));
     return s;
 }
 
@@ -89,14 +89,18 @@ int main(int argc, char **argv) {
     signal(SIGINT, cntrlc);
 
     unsigned int port = htonl(atoi(argv[1]));
-    struct sockaddr sin2;
+    struct sockaddr_in sin2;
+    sin2.sin_family = AF_INET;
+    // INADDR_ANY = any local machine address
+    sin2.sin_addr.s_addr = htonl(INADDR_ANY);
+    sin2.sin_port = htons(port);
     int s = create_socket(&sin2, port);
     err_handler(bind(s, (struct sockaddr *) &sin2, sizeof(sin2)));
     err_handler(listen(s, 10));
     while (shouldIContinue) {
         unsigned int numOfPrintable = 0;
-        struct sockaddr peerAddress;
-        err_handler(accept(s, &peerAddress, (socklen_t *) sizeof(peerAddress)));
+        struct sockaddr_in peerAddress;
+        err_handler(accept(s, (struct sockaddr *) &peerAddress, (socklen_t *) sizeof(peerAddress)));
         unsigned int length;
         readData(&length, s, sizeof(length));
         while (length > 0) {
