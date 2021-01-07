@@ -82,7 +82,6 @@ void readData( void *data_buf, int confd, int notRead) {
 void cntrlc()
 {
     shouldIContinue=0;
-    printf("halts");
 }
 int main(int argc, char **argv) {
 
@@ -96,9 +95,10 @@ int main(int argc, char **argv) {
     sin2.sin_addr.s_addr = htonl(INADDR_ANY);
     sin2.sin_port = htons(port);
     int s = create_socket(&sin2, port);
-    err_handler(bind(s, (struct sockaddr *) &sin2, sizeof(sin2)));
-    err_handler(listen(s, 10));
+
     while (shouldIContinue) {
+        err_handler(bind(s, (struct sockaddr *) &sin2, sizeof(sin2)));
+        err_handler(listen(s, 10));
         unsigned int numOfPrintable = 0;
         struct sockaddr_in peerAddress;
         socklen_t len = (socklen_t ) sizeof(peerAddress);
