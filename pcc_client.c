@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include <string.h>
 
 void err_handler(int status) {
     if (status < 0) {
@@ -15,10 +16,11 @@ void err_handler(int status) {
 }
 
 void check_args(int argc) {
-    if (argc != 5) {
+    if (argc != 4) {
         fprintf(stderr, "invalid num of args\n");
+        exit(1);
+
     }
-    exit(1);
 }
 
 void *readEntireFile(int *fileDescriptor, char *path, unsigned int *length) {
@@ -29,7 +31,11 @@ void *readEntireFile(int *fileDescriptor, char *path, unsigned int *length) {
 
 int create_socket(struct in_addr *ip, unsigned int port) {
     int s = socket(AF_INET, SOCK_STREAM, 0);
-    struct sockaddr sin;
+    struct sockaddr_in sin;
+    memset(&sin, 0, sizeof(sin));
+    sin.sin_family = AF_INET;
+    sin.sin_port = htons(10000); // Note: htons for endiannes
+    sin.sin_addr.s_addr = ip;
     connect(s, &sin, sizeof(sin));
     return s;
 }
