@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include <assert.h>
 
 
 void check_args(int argc) {
@@ -33,20 +34,8 @@ int create_socket(struct in_addr *ip, unsigned int port) {
 }
 
 
-int main(int argc, char **argv) {
-    check_args(argc);
-    struct in_addr ip;
-    inet_aton(argv[1], &ip);
-    unsigned int port = argv[2];
-    char *path = argv[3];
-    int length;
-    void *data_buf = readEntireFile(path, length);
-
-
-    int confd = create_socket(&ip, port);
-    int lenBuf = htonl(length);
-    write(confd, &lenBuf, sizeof (lenBuf));
-
+void sendData(const void *data_buf, int confd, int notwritten) {
+    int totalsent = 0;
     // keep looping until nothing left to write
     while (notwritten > 0) {
         // notwritten = how much we have left to write
@@ -61,6 +50,22 @@ int main(int argc, char **argv) {
         totalsent += nsent;
         notwritten -= nsent;
     }
+}
+
+int main(int argc, char **argv) {
+    check_args(argc);
+    struct in_addr ip;
+    inet_aton(argv[1], &ip);
+    unsigned int port = argv[2];
+    char *path = argv[3];
+    int length;
+    void *data_buf = readEntireFile(path, length);
+
+
+    int confd = create_socket(&ip, port);
+    int lenBuf = htonl(length);
+    sendData(&lenBuf, confd, sizeof(lenBuf));
+    sendData(data_buf, confd, length);
 
     // close socket
     close(confd);
