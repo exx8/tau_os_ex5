@@ -44,8 +44,8 @@ int main(int argc, char **argv) {
 
 
     int confd = create_socket(&ip, port);
-    int totalsent = 0;
-    int notwritten = length;
+    int lenBuf = htonl(length);
+    write(confd, &lenBuf, sizeof (lenBuf));
 
     // keep looping until nothing left to write
     while (notwritten > 0) {
