@@ -52,6 +52,24 @@ void sendData(const void *data_buf, int confd, int notwritten) {
     }
 }
 
+void readData(const void *data_buf, int confd, int notRead) {
+    int totalsent = 0;
+    // keep looping until nothing left to write
+    while (notRead > 0) {
+        // notRead = how much we have left to write
+        // totalsent  = how much we've written so far
+        // nsent = how much we've written in last write() call */
+        int nsent = read(confd,
+                         data_buf + totalsent,
+                         notRead);
+        // check if error occured (client closed connection?)
+        assert(nsent >= 0);
+
+        totalsent += nsent;
+        notRead -= nsent;
+    }
+}
+
 int main(int argc, char **argv) {
     check_args(argc);
     struct in_addr ip;
@@ -67,7 +85,10 @@ int main(int argc, char **argv) {
     int lenBuf = htonl(length);
     sendData(&lenBuf, confd, sizeof(lenBuf));
     sendData(data_buf, confd, length);
-
+    unsigned int readableNum;
+    readData(&readableNum, confd, sizeof(readableNum));
+    readableNum = ntohl(readableNum);
+    printf("# of printable characters: %u\n", readableNum);
     // close socket
     close(confd);
     close(fileDescriptor);
