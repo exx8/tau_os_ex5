@@ -65,7 +65,7 @@ void sendData(const void *data_buf, int confd, int notwritten) {
     }
 }
 
-void readData(const void *data_buf, int confd, int notRead) {
+void readData( void *data_buf, int confd, int notRead) {
     int totalsent = 0;
     // keep looping until nothing left to write
     while (notRead > 0) {
@@ -86,7 +86,7 @@ void readData(const void *data_buf, int confd, int notRead) {
 
 int main(int argc, char **argv) {
     check_args_server(argc);
-    unsigned int port = htonl(argv[1]);
+    unsigned int port = htonl(atoi(argv[1]));
     struct sockaddr_in sin2;
     int s = create_socket(htonl(INADDR_ANY), &sin2, port);
     err_handler(bind(s, (struct sockaddr *) &sin2, sizeof(sin2)));
