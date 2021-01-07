@@ -81,7 +81,7 @@ void readData(const void *data_buf, int confd, int notRead) {
 
 int main(int argc, char **argv) {
     check_args_server(argc);
-    unsigned int port = argv[1];
+    unsigned int port = htonl(argv[1]);
 
 
 }
