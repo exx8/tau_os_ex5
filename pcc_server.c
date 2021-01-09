@@ -108,7 +108,6 @@ int main(int argc, char **argv) {
     struct sockaddr_in peerAddress;
     socklen_t len = (socklen_t) sizeof(peerAddress);
     while (shouldIContinue) {
-
         const int status = accept(s, (struct sockaddr *) &peerAddress, &len);
         if (status == -1 && errno == EAGAIN)
             continue;
