@@ -16,6 +16,7 @@ static unsigned int pcc_total[128];
 static int volatile shouldIContinue = 1;
 
 void err_handler(int status) {
+    int err=errno;
     if (status < 0) {
         perror(NULL);
         exit(1);
