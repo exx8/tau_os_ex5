@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <sys/mman.h>
 #include <signal.h>
-
+#include "errno.h"
 #define LOWER_LIMIT 32
 #define UPPER_LIMIT 126
 static unsigned int pcc_total[128];
@@ -100,13 +100,17 @@ int main(int argc, char **argv) {
     sin2.sin_port = (port);
     int s = create_socket(&sin2, port);
 
-    while (shouldIContinue) {
         err_handler(bind(s, (struct sockaddr *) &sin2, sizeof(sin2)));
         err_handler(listen(s, 10));
         unsigned int numOfPrintable = 0;
         struct sockaddr_in peerAddress;
         socklen_t len = (socklen_t ) sizeof(peerAddress);
-        err_handler(accept(s, (struct sockaddr *) &peerAddress, &len));
+        while (shouldIContinue) {
+
+        const int status = accept(s, (struct sockaddr *) &peerAddress, &len);
+        if(status==-1&&errno==EAGAIN)
+            continue;
+        err_handler(status);
         unsigned int length;
         readData(&length, s, sizeof(length));
         while (length > 0) {
