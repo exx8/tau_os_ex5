@@ -9,6 +9,7 @@
 #include <sys/mman.h>
 #include <signal.h>
 #include "errno.h"
+
 #define LOWER_LIMIT 32
 #define UPPER_LIMIT 126
 static unsigned int pcc_total[128];
@@ -38,7 +39,7 @@ void check_args_server(int argc) {
 }
 
 int create_socket(struct sockaddr_in *sin2, unsigned int port) {
-    int s = socket(AF_INET, SOCK_STREAM|SOCK_NONBLOCK, 0);
+    int s = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
     int value = 1;
     setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &value, sizeof(value));
     connect(s, (const struct sockaddr *) sin2, sizeof(sin2));
@@ -64,7 +65,7 @@ void sendData(const void *data_buf, int confd, int notwritten) {
     }
 }
 
-void readData( void *data_buf, int confd, int notRead) {
+void readData(void *data_buf, int confd, int notRead) {
     int totalsent = 0;
     // keep looping until nothing left to write
     while (notRead > 0) {
@@ -82,11 +83,12 @@ void readData( void *data_buf, int confd, int notRead) {
         notRead -= nsent;
     }
 }
-void cntrlc()
-{
-    shouldIContinue=0;
+
+void cntrlc() {
+    shouldIContinue = 0;
     printf("halts/n");
 }
+
 int main(int argc, char **argv) {
 
     check_args_server(argc);
@@ -100,15 +102,15 @@ int main(int argc, char **argv) {
     sin2.sin_port = (port);
     int s = create_socket(&sin2, port);
 
-        err_handler(bind(s, (struct sockaddr *) &sin2, sizeof(sin2)));
-        err_handler(listen(s, 10));
-        unsigned int numOfPrintable = 0;
-        struct sockaddr_in peerAddress;
-        socklen_t len = (socklen_t ) sizeof(peerAddress);
-        while (shouldIContinue) {
+    err_handler(bind(s, (struct sockaddr *) &sin2, sizeof(sin2)));
+    err_handler(listen(s, 10));
+    unsigned int numOfPrintable = 0;
+    struct sockaddr_in peerAddress;
+    socklen_t len = (socklen_t) sizeof(peerAddress);
+    while (shouldIContinue) {
 
         const int status = accept(s, (struct sockaddr *) &peerAddress, &len);
-        if(status==-1&&errno==EAGAIN)
+        if (status == -1 && errno == EAGAIN)
             continue;
         err_handler(status);
         unsigned int length;
