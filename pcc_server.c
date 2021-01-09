@@ -38,7 +38,7 @@ void check_args_server(int argc) {
 }
 
 int create_socket(struct sockaddr_in *sin2, unsigned int port) {
-    int s = socket(AF_INET, SOCK_STREAM, 0);
+    int s = socket(AF_INET, SOCK_STREAM|SOCK_NONBLOCK, 0);
     int value = 1;
     setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &value, sizeof(value));
     connect(s, (const struct sockaddr *) sin2, sizeof(sin2));
@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
         unsigned int numOfPrintable = 0;
         struct sockaddr_in peerAddress;
         socklen_t len = (socklen_t ) sizeof(peerAddress);
-        err_handler(accept4(s, (struct sockaddr *) &peerAddress, &len,SOCK_NONBLOCK));
+        err_handler(accept(s, (struct sockaddr *) &peerAddress, &len));
         unsigned int length;
         readData(&length, s, sizeof(length));
         while (length > 0) {
