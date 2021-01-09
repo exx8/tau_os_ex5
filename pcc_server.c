@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
@@ -9,7 +11,6 @@
 
 #define LOWER_LIMIT 32
 #define UPPER_LIMIT 126
-
 static unsigned int pcc_total[128];
 static int volatile shouldIContinue = 1;
 
@@ -84,6 +85,7 @@ void readData( void *data_buf, int confd, int notRead) {
 void cntrlc()
 {
     shouldIContinue=0;
+    printf("halts/n");
 }
 int main(int argc, char **argv) {
 
@@ -104,7 +106,7 @@ int main(int argc, char **argv) {
         unsigned int numOfPrintable = 0;
         struct sockaddr_in peerAddress;
         socklen_t len = (socklen_t ) sizeof(peerAddress);
-        err_handler(accept(s, (struct sockaddr *) &peerAddress, &len));
+        err_handler(accept4(s, (struct sockaddr *) &peerAddress, &len,SOCK_NONBLOCK));
         unsigned int length;
         readData(&length, s, sizeof(length));
         while (length > 0) {
