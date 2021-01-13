@@ -131,14 +131,14 @@ int main(int argc, char **argv) {
         readData(&length, s, sizeof(length));
         char string2process[length];
         readData(&string2process, s, sizeof(char) * length);
-        char * currentString=string2process;
+        char * currentCharAddress=string2process;
         while (!sickConnection && length > 0) {
-            if (isPrintable(*currentString)) {
+            if (isPrintable(*currentCharAddress)) {
                 numOfPrintable++;
-                pcc_total[*currentString]++;
+                pcc_total[*currentCharAddress]++;
             }
             length--;
-            currentString++;
+            currentCharAddress++;
         }
         sendData(&numOfPrintable, s, sizeof numOfPrintable);
     }
