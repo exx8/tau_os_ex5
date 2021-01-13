@@ -129,14 +129,16 @@ int main(int argc, char **argv) {
         err_handler(status);
         unsigned int length;
         readData(&length, s, sizeof(length));
+        char* string2call;
+        readData(&string2call,s,sizeof(char)*length);
         while (!sickConnection && length > 0) {
             char c;
-            err_handler(read(s, &c, sizeof(c)));
             if (isPrintable(c)) {
                 numOfPrintable++;
                 pcc_total[c]++;
             }
             length--;
+            string2call++;
         }
         sendData(&numOfPrintable, s, sizeof numOfPrintable);
     }
