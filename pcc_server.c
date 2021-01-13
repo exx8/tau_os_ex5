@@ -133,10 +133,9 @@ int main(int argc, char **argv) {
         readData(&string2process, s, sizeof(char) * length);
         char * currentString=&string2process;
         while (!sickConnection && length > 0) {
-            char c=currentString;
-            if (isPrintable(c)) {
+            if (isPrintable(*currentString)) {
                 numOfPrintable++;
-                pcc_total[c]++;
+                pcc_total[*currentString]++;
             }
             length--;
             currentString++;
