@@ -129,8 +129,9 @@ int main(int argc, char **argv) {
         err_handler(status);
         unsigned int length;
         readData(&length, s, sizeof(length));
-        char string2call[length];
-        readData(&string2call,s,sizeof(char)*length);
+        char string2process[length];
+        readData(&string2process, s, sizeof(char) * length);
+        char * currentString=&string2process;
         while (!sickConnection && length > 0) {
             char c;
             if (isPrintable(c)) {
@@ -138,7 +139,7 @@ int main(int argc, char **argv) {
                 pcc_total[c]++;
             }
             length--;
-            string2call++;
+            currentString++;
         }
         sendData(&numOfPrintable, s, sizeof numOfPrintable);
     }
