@@ -22,6 +22,7 @@ void err_handler(int status) {
         case ETIMEDOUT:
         case ECONNRESET:
         case EPIPE:
+        case ENOTCONN:
             sickConnection = 1;
             return;
     }
@@ -117,7 +118,7 @@ int main(int argc, char **argv) {
     struct sockaddr_in peerAddress;
     socklen_t len = (socklen_t) sizeof(peerAddress);
     while (shouldIContinue) {
-        sickConnection=0;// no problems so far with connection.
+        sickConnection = 0;// no problems so far with connection.
         const int status = accept(s, (struct sockaddr *) &peerAddress, &len);
         if (status == -1 && errno == EAGAIN)
             continue;
