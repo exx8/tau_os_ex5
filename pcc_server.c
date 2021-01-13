@@ -18,17 +18,21 @@ static int sickConnection = 0;
 
 void err_handler(int status) {
     int err = errno;
-    switch (err) {
-        case ETIMEDOUT:
-        case ECONNRESET:
-        case EPIPE:
-        case ENOTCONN:
-            sickConnection = 1;
-            return;
-    }
     if (status < 0) {
         perror(NULL);
-        exit(1);
+
+        switch (err) {
+            case ETIMEDOUT:
+            case ECONNRESET:
+            case EPIPE:
+            case ENOTCONN:
+                sickConnection = 1;
+                break;
+            default:
+                exit(1);
+
+        }
+
     }
 }
 
