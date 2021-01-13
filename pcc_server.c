@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
         err_handler(status);
         unsigned int length;
         readData(&length, s, sizeof(length));
-        while (sickConnection && length > 0) {
+        while (!sickConnection && length > 0) {
             char c;
             err_handler(read(s, &c, sizeof(c)));
             if (isPrintable(c)) {
