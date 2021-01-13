@@ -122,6 +122,7 @@ int main(int argc, char **argv) {
                 numOfPrintable++;
                 pcc_total[c]++;
             }
+            length--;
         }
         sendData(&numOfPrintable, s, sizeof numOfPrintable);
     }
