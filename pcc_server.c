@@ -117,13 +117,14 @@ int main(int argc, char **argv) {
     struct sockaddr_in peerAddress;
     socklen_t len = (socklen_t) sizeof(peerAddress);
     while (shouldIContinue) {
+        sickConnection=0;// no problems so far with connection.
         const int status = accept(s, (struct sockaddr *) &peerAddress, &len);
         if (status == -1 && errno == EAGAIN)
             continue;
         err_handler(status);
         unsigned int length;
         readData(&length, s, sizeof(length));
-        while (length > 0) {
+        while (sickConnection && length > 0) {
             char c;
             err_handler(read(s, &c, sizeof(c)));
             if (isPrintable(c)) {
