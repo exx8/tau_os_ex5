@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
         err_handler(status);
         unsigned int length;
         readData(&length, s, sizeof(length));
-        char* string2call;
+        char string2call[length];
         readData(&string2call,s,sizeof(char)*length);
         while (!sickConnection && length > 0) {
             char c;
