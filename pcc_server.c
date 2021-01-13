@@ -14,9 +14,17 @@
 #define UPPER_LIMIT 126
 static unsigned int pcc_total[128];
 static int volatile shouldIContinue = 1;
+static int sickConnection = 0;
 
 void err_handler(int status) {
-    int err=errno;
+    int err = errno;
+    switch (err) {
+        case ETIMEDOUT:
+        case ECONNRESET:
+        case EPIPE:
+            sickConnection = 1;
+            return;
+    }
     if (status < 0) {
         perror(NULL);
         exit(1);
