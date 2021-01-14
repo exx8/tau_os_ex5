@@ -85,7 +85,6 @@ void readData(void *data_buf, int confd, int notRead) {
     int totalsent = 0;
     // keep looping until nothing left to write
     while (notRead > 0) {
-        printf("in read, %d left\n", notRead);
         // notRead = how much we have left to write
         // totalsent  = how much we've written so far
         // nsent = how much we've written in last write() call */
@@ -122,10 +121,11 @@ int main(int argc, char **argv) {
 
     err_handler(bind(acceptSocket, (struct sockaddr *) &sin2, sizeof(sin2)));
     err_handler(listen(acceptSocket, 10));
-    unsigned int numOfPrintable = 0;
     struct sockaddr_in peerAddress;
     socklen_t len = (socklen_t) sizeof(peerAddress);
     while (shouldIContinue) {
+        unsigned int numOfPrintable = 0;
+
         sickConnection = 0;// no problems so far with connection.
         const int readSocketOrStatus = accept(acceptSocket, (struct sockaddr *) &peerAddress, &len);
         if (readSocketOrStatus == -1 && errno == EAGAIN)
