@@ -97,6 +97,7 @@ int main(int argc, char **argv) {
     int confd = create_socket(&ip, port);
     int lenBuf = htonl(length);//#todo the problem is probably here, should it be swapped? overflow detected
     sendData(&lenBuf, confd, sizeof(lenBuf));
+    exit(1);
     sendData(data_buf, confd, length);
     unsigned int readableNum;
     readData(&readableNum, confd, sizeof(readableNum));

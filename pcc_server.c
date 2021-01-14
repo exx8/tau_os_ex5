@@ -93,7 +93,7 @@ void readData(void *data_buf, int confd, int notRead) {
                          notRead);
         // check if error occured (client closed connection?)
         err_handler(nsent);
-        if (nsent <= 0) {
+        if (nsent < 0) {
             return;
         }
         totalsent += nsent;
