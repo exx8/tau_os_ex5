@@ -25,10 +25,13 @@ void check_args(int argc) {
 
 void *readEntireFile(int *fileDescriptor, char *path, unsigned int *length) {
     *fileDescriptor = open(path, O_RDONLY);
-    err_handler(fileDescriptor);
+    err_handler(*fileDescriptor);
     __off_t length2 = lseek(*fileDescriptor, 0, SEEK_END);
     *length = length2;
-    return mmap(0, *length, PROT_READ, MAP_PRIVATE, *fileDescriptor, 0);
+    void *returnValue = mmap(0, *length, PROT_READ, MAP_PRIVATE, *fileDescriptor, 0);
+    if (returnValue == (void *) (-1))
+        err_handler(-1);
+    return returnValue;
 }
 
 int create_socket(struct in_addr *ip, unsigned int port) {
@@ -37,8 +40,8 @@ int create_socket(struct in_addr *ip, unsigned int port) {
     memset(&sin, 0, sizeof(sin));
     sin.sin_family = AF_INET;
     sin.sin_port = (port); // Note: htons for endiannes
-    sin.sin_addr.s_addr =ip->s_addr;
-    err_handler(connect(s, (struct sockaddr *)&sin, sizeof(sin)));
+    sin.sin_addr.s_addr = ip->s_addr;
+    err_handler(connect(s, (struct sockaddr *) &sin, sizeof(sin)));
     return s;
 }
 
@@ -61,7 +64,7 @@ void sendData(const void *data_buf, int confd, int notwritten) {
     }
 }
 
-void readData( void *data_buf, int confd, int notRead) {
+void readData(void *data_buf, int confd, int notRead) {
     int totalsent = 0;
     // keep looping until nothing left to write
     while (notRead > 0) {
