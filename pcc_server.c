@@ -145,7 +145,8 @@ int main(int argc, char **argv) {
             length--;
             currentCharAddress++;
         }
-        sendData(&numOfPrintable, readSocketOrStatus, sizeof numOfPrintable);
+      unsigned int num2send=htons(numOfPrintable);
+        sendData(&num2send, readSocketOrStatus, sizeof numOfPrintable);
     }
     for (int k = LOWER_LIMIT; k <= UPPER_LIMIT; k++) {
         printf("char '%c' : %u times\n", k, pcc_total[k]);
