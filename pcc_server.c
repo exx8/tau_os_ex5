@@ -122,10 +122,10 @@ int main(int argc, char **argv) {
 
     err_handler(bind(acceptSocket, (struct sockaddr *) &sin2, sizeof(sin2)));
     err_handler(listen(acceptSocket, 10));
-    unsigned int numOfPrintable = 0;
     struct sockaddr_in peerAddress;
     socklen_t len = (socklen_t) sizeof(peerAddress);
     while (shouldIContinue) {
+        unsigned int numOfPrintable = 0;
         sickConnection = 0;// no problems so far with connection.
         const int readSocketOrStatus = accept(acceptSocket, (struct sockaddr *) &peerAddress, &len);
         if (readSocketOrStatus == -1 && errno == EAGAIN)
@@ -145,6 +145,7 @@ int main(int argc, char **argv) {
             length--;
             currentCharAddress++;
         }
+        numOfPrintable=htons(numOfPrintable);
         sendData(&numOfPrintable, readSocketOrStatus, sizeof numOfPrintable);
     }
     for (int k = LOWER_LIMIT; k <= UPPER_LIMIT; k++) {
