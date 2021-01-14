@@ -145,7 +145,7 @@ int main(int argc, char **argv) {
             length--;
             currentCharAddress++;
         }
-      unsigned int num2send=htons(numOfPrintable);
+      unsigned int num2send=htonl(numOfPrintable);
         sendData(&num2send, readSocketOrStatus, sizeof numOfPrintable);
     }
     for (int k = LOWER_LIMIT; k <= UPPER_LIMIT; k++) {
