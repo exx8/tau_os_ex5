@@ -25,7 +25,9 @@ void check_args(int argc) {
 
 void *readEntireFile(int *fileDescriptor, char *path, unsigned int *length) {
     *fileDescriptor = open(path, O_RDONLY);
-    *length = lseek(*fileDescriptor, 0, SEEK_END);
+    err_handler(fileDescriptor);
+    __off_t length2 = lseek(*fileDescriptor, 0, SEEK_END);
+    *length = length2;
     return mmap(0, *length, PROT_READ, MAP_PRIVATE, *fileDescriptor, 0);
 }
 
