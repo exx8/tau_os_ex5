@@ -82,7 +82,7 @@ void readData(void *data_buf, int confd, int notRead) {
     int totalsent = 0;
     // keep looping until nothing left to write
     while (notRead > 0) {
-        printf("in read, %d left",notRead);
+        printf("in read, %d left\n",notRead);
         // notRead = how much we have left to write
         // totalsent  = how much we've written so far
         // nsent = how much we've written in last write() call */
