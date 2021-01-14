@@ -133,7 +133,7 @@ int main(int argc, char **argv) {
         err_handler(readSocketOrStatus);
         unsigned int length;
         readData(&length, readSocketOrStatus, sizeof(length));
-        length=ntohs(length);
+        length=ntohl(length);
         char string2process[length];
         readData(&string2process, readSocketOrStatus, sizeof(char) * length);
         char *currentCharAddress = string2process;

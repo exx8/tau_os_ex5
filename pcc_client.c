@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
     sendData(data_buf, confd, length);
     unsigned int readableNum;
     readData(&readableNum, confd, sizeof(readableNum));
-    readableNum=ntohs(readableNum);
+    readableNum=ntohl(readableNum);
     printf("# of printable characters: %u\n", readableNum);
     // close socket
     close(confd);
