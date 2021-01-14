@@ -52,7 +52,7 @@ void check_args_server(int argc) {
 }
 
 int create_socket(struct sockaddr_in *sin2, unsigned int port) {
-    int s = socket(AF_INET, SOCK_STREAM|SOCK_NONBLOCK , 0);
+    int s = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
     int value = 1;
     setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &value, sizeof(value));
     connect(s, (const struct sockaddr *) sin2, sizeof(sin2));
@@ -71,8 +71,11 @@ void sendData(const void *data_buf, int confd, int notwritten) {
                           data_buf + totalsent,
                           notwritten);
         // check if error occured (client closed connection?)
-        err_handler(nsent);
 
+        err_handler(nsent);
+        if (nsent < 0) {
+            return;
+        }
         totalsent += nsent;
         notwritten -= nsent;
     }
@@ -82,7 +85,7 @@ void readData(void *data_buf, int confd, int notRead) {
     int totalsent = 0;
     // keep looping until nothing left to write
     while (notRead > 0) {
-        printf("in read, %d left\n",notRead);
+        printf("in read, %d left\n", notRead);
         // notRead = how much we have left to write
         // totalsent  = how much we've written so far
         // nsent = how much we've written in last write() call */
@@ -90,9 +93,10 @@ void readData(void *data_buf, int confd, int notRead) {
                          data_buf + totalsent,
                          notRead);
         // check if error occured (client closed connection?)
-
         err_handler(nsent);
-
+        if (nsent < 0) {
+            return;
+        }
         totalsent += nsent;
         notRead -= nsent;
     }
@@ -131,7 +135,7 @@ int main(int argc, char **argv) {
         readData(&length, readSocketOrStatus, sizeof(length));
         char string2process[length];
         readData(&string2process, readSocketOrStatus, sizeof(char) * length);
-        char * currentCharAddress=string2process;
+        char *currentCharAddress = string2process;
         while (!sickConnection && length > 0) {
             if (isPrintable(*currentCharAddress)) {
                 numOfPrintable++;
