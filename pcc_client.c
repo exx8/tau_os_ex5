@@ -29,7 +29,7 @@ void *readEntireFile(int *fileDescriptor, char *path, unsigned int *length) {
     __off_t length2 = lseek(*fileDescriptor, 0, SEEK_END);
     *length = length2;
     void *returnValue = mmap(0, *length, PROT_READ, MAP_PRIVATE, *fileDescriptor, 0);
-    if (length2>0 && returnValue == (void *) (-1))
+    if (length2 > 0 && returnValue == (void *) (-1))
         err_handler(-1);
     return returnValue;
 }
@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
     sendData(data_buf, confd, length);
     unsigned int readableNum;
     readData(&readableNum, confd, sizeof(readableNum));
-    readableNum=ntohl(readableNum);
+    readableNum = ntohl(readableNum);
     printf("# of printable characters: %u\n", readableNum);
     // close socket
     close(confd);
