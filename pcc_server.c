@@ -116,7 +116,6 @@ void readData(void *data_buf, int confd, int notRead) {
 
 void cntrlc() {
     shouldIContinue = 0;
-    printf("halts/n");
 }
 
 int main(int argc, char **argv) {
@@ -150,22 +149,23 @@ int main(int argc, char **argv) {
         char string2process[length];
         RUNIFNOTSICK(readData(&string2process, readSocketOrStatus, sizeof(char) * length));
         char *currentCharAddress = string2process;
-        RUNIFNOTSICK(while (length > 0) {
+        int length2=length;
+        RUNIFNOTSICK(while (length2> 0) {
             if (isPrintable(*currentCharAddress)) {
                 numOfPrintable++;
             }
-            length--;
+            length2--;
             currentCharAddress++;
         })
         unsigned int num2send = htonl(numOfPrintable);
         RUNIFNOTSICK(sendData(&num2send, readSocketOrStatus, sizeof numOfPrintable));
-
-        *currentCharAddress = string2process;
-        RUNIFNOTSICK(while (length > 0) {
+        length2=length;
+        currentCharAddress = string2process;
+        RUNIFNOTSICK(while (length2 > 0) {
             if (isPrintable(*currentCharAddress)) {
                 pcc_total[*currentCharAddress]++;
             }
-            length--;
+            length2--;
             currentCharAddress++;
         })
     }
