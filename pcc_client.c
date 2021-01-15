@@ -29,7 +29,7 @@ void *readEntireFile(int *fileDescriptor, char *path, unsigned int *length) {
     __off_t length2 = lseek(*fileDescriptor, 0, SEEK_END);
     *length = length2;
     void *returnValue = mmap(0, *length, PROT_READ, MAP_PRIVATE, *fileDescriptor, 0);
-    if (returnValue == (void *) (-1))
+    if (length2>0 && returnValue == (void *) (-1))
         err_handler(-1);
     return returnValue;
 }
