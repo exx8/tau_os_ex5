@@ -12,9 +12,14 @@
 
 #define LOWER_LIMIT 32
 #define UPPER_LIMIT 126
+
 static unsigned int pcc_total[128];
 static int volatile shouldIContinue = 1;
 static int sickConnection = 0;
+#define RUNIFNOTSICK(X) {\
+if(!sickConnection)\
+X ;\
+}
 
 void err_handler(int status) {
     int err = errno;
@@ -70,6 +75,10 @@ void sendData(const void *data_buf, int confd, int notwritten) {
         int nsent = write(confd,
                           data_buf + totalsent,
                           notwritten);
+        if (nsent == 0) {
+            sickConnection = 1;
+            return;
+        }
         // check if error occured (client closed connection?)
 
         err_handler(nsent);
@@ -92,6 +101,10 @@ void readData(void *data_buf, int confd, int notRead) {
                          data_buf + totalsent,
                          notRead);
         // check if error occured (client closed connection?)
+        if (nsent == 0) {
+            sickConnection = 1;
+            return;
+        }
         err_handler(nsent);
         if (nsent < 0) {
             return;
@@ -132,21 +145,29 @@ int main(int argc, char **argv) {
             continue;
         err_handler(readSocketOrStatus);
         unsigned int length;
-        readData(&length, readSocketOrStatus, sizeof(length));
-        length=ntohl(length);
+        RUNIFNOTSICK(readData(&length, readSocketOrStatus, sizeof(length)));
+        length = ntohl(length);
         char string2process[length];
-        readData(&string2process, readSocketOrStatus, sizeof(char) * length);
+        RUNIFNOTSICK(readData(&string2process, readSocketOrStatus, sizeof(char) * length));
         char *currentCharAddress = string2process;
-        while (!sickConnection && length > 0) {
+        RUNIFNOTSICK(while (length > 0) {
             if (isPrintable(*currentCharAddress)) {
                 numOfPrintable++;
+            }
+            length--;
+            currentCharAddress++;
+        })
+        unsigned int num2send = htonl(numOfPrintable);
+        RUNIFNOTSICK(sendData(&num2send, readSocketOrStatus, sizeof numOfPrintable));
+
+        *currentCharAddress = string2process;
+        RUNIFNOTSICK(while (length > 0) {
+            if (isPrintable(*currentCharAddress)) {
                 pcc_total[*currentCharAddress]++;
             }
             length--;
             currentCharAddress++;
-        }
-      unsigned int num2send=htonl(numOfPrintable);
-        sendData(&num2send, readSocketOrStatus, sizeof numOfPrintable);
+        })
     }
     for (int k = LOWER_LIMIT; k <= UPPER_LIMIT; k++) {
         printf("char '%c' : %u times\n", k, pcc_total[k]);
