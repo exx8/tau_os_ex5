@@ -146,11 +146,11 @@ int main(int argc, char **argv) {
         unsigned int length;
         RUNIFNOTSICK(readData(&length, readSocketOrStatus, sizeof(length)));
         length = ntohl(length);
-        char string2process[length];
+        unsigned char string2process[length];
         RUNIFNOTSICK(readData(&string2process, readSocketOrStatus, sizeof(char) * length));
-        char *currentCharAddress = string2process;
-        int length2=length;
-        RUNIFNOTSICK(while (length2> 0) {
+        unsigned char *currentCharAddress = string2process;
+        int length2 = length;
+        RUNIFNOTSICK(while (length2 > 0) {
             if (isPrintable(*currentCharAddress)) {
                 numOfPrintable++;
             }
@@ -159,7 +159,7 @@ int main(int argc, char **argv) {
         })
         unsigned int num2send = htonl(numOfPrintable);
         RUNIFNOTSICK(sendData(&num2send, readSocketOrStatus, sizeof numOfPrintable));
-        length2=length;
+        length2 = length;
         currentCharAddress = string2process;
         RUNIFNOTSICK(while (length2 > 0) {
             if (isPrintable(*currentCharAddress)) {

@@ -1,3 +1,4 @@
+#define _DEFAULT_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
@@ -7,6 +8,8 @@
 #include <unistd.h>
 #include <sys/mman.h>
 #include <string.h>
+
+
 
 void err_handler(int status) {
     if (status < 0) {
